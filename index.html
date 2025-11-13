@@ -7,7 +7,6 @@
     <meta name="description" content="اكتشف أفضل المنتجات والعروض الحصرية من أمازون الإمارات بأسعار تنافسية. تسوق الآن واحصل على أفضل الصفقات">
     <meta name="keywords" content="أمازون الإمارات, تسوق أونلاين, منتجات أمازون, عروض أمازون, تسوق الإمارات">
     <link rel="canonical" href="https://sherow1982.github.io/amazing-uae/">
-    <!-- Open Graph -->
     <meta property="og:title" content="Amazing UAE - أفضل المنتجات من أمازون الإمارات">
     <meta property="og:description" content="اكتشف أفضل المنتجات والعروض من أمازون الإمارات">
     <meta property="og:type" content="website">
@@ -60,6 +59,16 @@
         let allProducts = [];
         let displayedCount = 0;
         const productsPerPage = 20;
+
+        const slugify = (text) => {
+            return text.toString().toLowerCase()
+                .replace(/\s+/g, '-')
+                .replace(/[^\w\-]+/g, '')
+                .replace(/\-\-+/g, '-')
+                .replace(/^-+/, '')
+                .replace(/-+$/, '');
+        };
+
         const lazyLoadImage = (img) => {
             const src = img.dataset.src;
             if (src) {
@@ -68,6 +77,7 @@
                 img.removeAttribute('data-src');
             }
         };
+
         const observeImages = () => {
             const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -81,20 +91,22 @@
                 imageObserver.observe(img);
             });
         };
+
         const loadMoreProducts = () => {
             const grid = document.getElementById('products-grid');
             const endIndex = Math.min(displayedCount + productsPerPage, allProducts.length);
             for (let i = displayedCount; i < endIndex; i++) {
                 const product = allProducts[i];
+                const productUrl = `products/${slugify(product.title)}-${product.id}.html`;
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <a href="products/${product.id}.html" class="product-link" title="عرض تفاصيل ${product.title}">
+                    <a href="${productUrl}" class="product-link" title="عرض تفاصيل ${product.title}">
                         <img class="lazy" data-src="${product.image_link}" alt="${product.title}" width="280" height="280">
                         <div class="product-title">${product.title}</div>
                         <div class="product-price">${product.price} درهم</div>
                     </a>
-                    <a href="products/${product.id}.html" class="view-more-btn">شاهد المزيد</a>
+                    <a href="${productUrl}" class="view-more-btn">شاهد المزيد</a>
                     <a href="${product.affiliate_link}" class="amazon-btn" target="_blank" rel="nofollow noopener">اشتري من أمازون</a>
                 `;
                 grid.appendChild(card);
@@ -105,6 +117,7 @@
                 document.getElementById('load-more-container').style.display = 'none';
             }
         };
+
         fetch('products-data.json')
             .then(response => response.json())
             .then(products => {
