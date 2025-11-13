@@ -61,8 +61,7 @@ class StoreApp {
         const category = document.getElementById('categoryFilter')?.value || '';
 
         this.filteredProducts = this.products.filter(product => {
-            const matchesSearch = product.title.toLowerCase().includes(searchTerm) || 
-                                product.description?.toLowerCase().includes(searchTerm);
+            const matchesSearch = product.title.toLowerCase().includes(searchTerm);
             const matchesCategory = !category || product.category === category;
             return matchesSearch && matchesCategory;
         });
@@ -87,7 +86,7 @@ class StoreApp {
 
         grid.innerHTML = pageProducts.map(product => `
             <div class="product-card">
-                <img src="${product.image}" alt="${product.title}" class="product-image">
+                <img src="${product.image_link}" alt="${product.title}" class="product-image" loading="lazy">
                 <div class="product-info">
                     <h3 class="product-title">${product.title}</h3>
                     <div class="product-price">${product.price} درهم</div>
@@ -95,7 +94,7 @@ class StoreApp {
                         <button onclick="window.storeApp.addToCart(${product.id})" class="btn btn-primary">
                             🛒 أضف للسلة
                         </button>
-                        <a href="products/${product.url}" target="_blank" class="btn btn-secondary">
+                        <a href="products/${product.slug}.html" class="btn btn-secondary">
                             👁️ التفاصيل
                         </a>
                     </div>
@@ -151,8 +150,8 @@ class StoreApp {
                 id: product.id,
                 title: product.title,
                 price: product.price,
-                image: product.image,
-                link: product.link,
+                image: product.image_link,
+                link: product.affiliate_link,
                 quantity: 1
             });
         }
