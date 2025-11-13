@@ -1,0 +1,43 @@
+<!-- Footer Component -->
+<footer class="footer">
+    <div class="container">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>🏪 عن المتجر</h3>
+                <p>نحن موقع تابع متخصص في عرض أفضل منتجات أمازون.</p>
+            </div>
+            <div class="footer-section">
+                <h3>📧 اتصل بنا</h3>
+                <p><a href="mailto:sherow1982@gmail.com" target="_blank" style="color: inherit;">📧 البريد: sherow1982@gmail.com</a></p>
+                <p><a href="https://wa.me/201110760081" target="_blank" style="color: inherit;">📞 واتساب: +201110760081</a></p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 متجر أمازينج الإمارات</p>
+        </div>
+    </div>
+</footer>
+
+<div id="cartDrawer" style="position: fixed; top: 0; right: -100%; width: 400px; max-width: 100%; height: 100vh; background: white; box-shadow: -4px 0 24px rgba(0,0,0,0.2); z-index: 10000; transition: right 0.3s; overflow-y: auto;">
+    <div style="padding: 1.5rem; border-bottom: 1px solid #eee; background: linear-gradient(135deg, #232F3E, #FF9900); color: white; display: flex; justify-content: space-between; align-items: center;">
+        <h2 style="margin: 0;">🛒 سلة التسوق</h2>
+        <button onclick="window.storeApp?.toggleCartDrawer()" style="background: rgba(255,255,255,0.2); border: none; color: white; font-size: 1.5rem; cursor: pointer; width: 40px; height: 40px; border-radius: 50%;">✕</button>
+    </div>
+    <div id="cartItems" style="padding: 1rem;"></div>
+    <div style="padding: 1.5rem; border-top: 2px solid #eee; background: white; position: sticky; bottom: 0;">
+        <div style="display: flex; justify-content: space-between; margin-bottom: 1rem; font-size: 1.25rem; font-weight: 700;">
+            <span>المجموع:</span>
+            <span id="cartTotal" style="color: #FF9900;">0 درهم</span>
+        </div>
+        <button onclick="window.storeApp?.gotoCartPage()" class="btn btn-primary" style="width:100%;padding:1rem;font-size:1.125rem;margin-bottom: 0.5rem;">
+            🛒 ادخل للسلة
+        </button>
+        <button onclick="window.storeApp?.toggleCartDrawer()" class="btn btn-outline" style="width:100%;padding:0.75rem;font-size:1.125rem;margin-bottom: 0.5rem;">
+            ⬅ اكمل التسوق
+        </button>
+        <button onclick="window.storeApp?.buyAmazonNow()" class="btn btn-primary" style="width:100%;padding:1rem;font-size:1.125rem;margin-top: 0.25rem;background:#FF9900;">
+            🏷 شراء من أمازون
+        </button>
+    </div>
+</div>
+<div id="cartOverlay" onclick="window.storeApp?.toggleCartDrawer()" style="display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0,0,0,0.5); z-index: 9999;"></div>
