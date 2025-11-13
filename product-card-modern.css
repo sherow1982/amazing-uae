@@ -1,0 +1,49 @@
+/* ======= MODERN AMAZE PRODUCT CARD - PREMIUM ======= */
+.product-card {
+  background: linear-gradient(135deg, #fff, #f5f5f5 70%, #ffe5b3 100%);
+  border-radius: 22px;
+  box-shadow: 0 10px 32px -6px #ffc54d90, 0 2px 4px #eee;
+  border: none;
+  margin: 0;
+  overflow: hidden;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  transition: all 0.3s;
+  min-height: 420px;
+}
+.product-card:hover {
+  transform: translateY(-8px) scale(1.045) rotate(-1deg);
+  box-shadow: 0 22px 48px -10px #ffa600b3, 0 4px 6px #ffc54d50;
+}
+.product-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 5px; z-index: 2;
+  background: linear-gradient(90deg, #ffa600, #146EB4 70%);
+}
+.product-image-wrapper {position:relative;width:100%;padding-top:70%;background:#f0efe7;overflow:hidden;z-index:1}
+.product-image{position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;border-radius:0 0 18px 18px;box-shadow:0 12px 40px #eeedeb80;transition:transform 0.45s cubic-bezier(.2,.8,.2,1)}
+.product-card:hover .product-image{transform:scale(1.09) rotate(-2deg);}
+.product-info{
+  display: flex;flex-direction: column;gap: 0.85rem;
+  background: linear-gradient(98deg,#fff,#fff9ee 50%);
+  padding: 1.25rem 1.1rem 0.8rem 1.1rem;
+  min-height:140px;
+}
+.product-title{
+  font-size:1.15rem;font-weight:900;color:#232F3E;margin-bottom:0.5rem;line-height:1.35;min-height:2.5em;max-height:2.7em;overflow:hidden;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;text-shadow:0 1px 0 #fff3;letter-spacing:0.01em
+}
+.product-meta{display:flex;align-items:center;justify-content:space-between;margin:0.12em 0 0.35em 0}
+.product-price{font-size:1.38rem;font-weight:800;color:#ffa600;text-shadow:0 1px 0 #fff1;}
+.product-rating{font-size:.99em;color:#ffbe27;display:flex;gap: 0.2em;align-items:center;letter-spacing:0.08em;}
+.product-actions{display:flex;gap:.5rem;justify-content:stretch;align-items:center;margin-top:auto;}
+.product-actions .btn{flex:1 1 0;box-shadow:0 2px 8px #ffe2b050;font-size:0.98rem;border-radius:14px;}
+.product-actions .btn-primary{background:linear-gradient(99deg,#ffa600,#e68600 55%,#ffce5a);color:#fff;font-weight:900;letter-spacing:0.05em;}
+.product-actions .btn-primary:hover{background:linear-gradient(99deg,#FFA600,#ee9100);box-shadow:0 6px 24px #ffda9590;}
+.product-actions .btn-secondary{background:linear-gradient(96deg,#146EB4,#0d5685 80%);color:#fff;}
+.product-actions .btn-secondary:hover{transform:scale(1.04);background:#174C6B}
+.product-card .badge{position:absolute;top:18px;left:18px;background:linear-gradient(88deg,#0d87dd,#ffb13e);color:#fff;border-radius:12px;padding:5px 14px;font-size:0.83rem;font-weight:700;box-shadow:0 1.5px 6px #ffc47f66;z-index:6}
+.product-card:hover .badge{box-shadow:0 4px 18px #ffe2c999}
+@media (max-width:620px){.product-card{border-radius:14px;min-height:340px}.product-image-wrapper{padding-top:80%;}}
