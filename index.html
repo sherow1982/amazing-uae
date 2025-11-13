@@ -98,16 +98,15 @@
             
             for (let i = displayedCount; i < endIndex; i++) {
                 const product = allProducts[i];
-                const productPage = `products/${product.id}.html`;
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <a href="${productPage}" class="product-link" title="عرض تفاصيل ${product.title}">
+                    <a href="products/${product.id}.html" class="product-link" title="عرض تفاصيل ${product.title}">
                         <img class="lazy" data-src="${product.image_link}" alt="${product.title}" width="280" height="280">
                         <div class="product-title">${product.title}</div>
                         <div class="product-price">${product.price} درهم</div>
                     </a>
-                    <a href="${productPage}" class="view-more-btn">شاهد المزيد</a>
+                    <a href="products/${product.id}.html" class="view-more-btn">شاهد المزيد</a>
                     <a href="${product.affiliate_link}" class="amazon-btn" target="_blank" rel="nofollow noopener">اشتري من أمازون</a>
                 `;
                 grid.appendChild(card);
