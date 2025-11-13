@@ -296,3 +296,4 @@ if (document.readyState === 'loading') {
 } else {
     window.storeApp = new StoreApp();
 }
+
