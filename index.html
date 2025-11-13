@@ -88,7 +88,7 @@
             const endIndex = Math.min(displayedCount + productsPerPage, allProducts.length);
             for (let i = displayedCount; i < endIndex; i++) {
                 const product = allProducts[i];
-                const productUrl = product.filename ? `products/${product.filename}` : `products/${product.id}.html`;
+                const productUrl = `products/${product.link}`;
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
