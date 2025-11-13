@@ -56,6 +56,16 @@ class StoreApp {
         }
     }
 
+    createSlug(title, id) {
+        // إنشاء slug من العنوان
+        let slug = title.toLowerCase()
+            .replace(/[^\w\s-]/g, '')
+            .replace(/\s+/g, '-')
+            .replace(/-+/g, '-')
+            .substring(0, 80);
+        return `${slug}-${id}`;
+    }
+
     filterProducts() {
         const searchTerm = document.getElementById('searchBox')?.value.toLowerCase() || '';
         const category = document.getElementById('categoryFilter')?.value || '';
@@ -84,23 +94,28 @@ class StoreApp {
             return;
         }
 
-        grid.innerHTML = pageProducts.map(product => `
-            <div class="product-card">
+        grid.innerHTML = pageProducts.map(product => {
+            const slug = product.slug || this.createSlug(product.title, product.id);
+            const productUrl = `products/${slug}.html`;
+
+            return `
+            <div class="product-card" onclick="window.open('${productUrl}', '_blank')" style="cursor: pointer;">
                 <img src="${product.image_link}" alt="${product.title}" class="product-image" loading="lazy">
                 <div class="product-info">
                     <h3 class="product-title">${product.title}</h3>
                     <div class="product-price">${product.price} درهم</div>
                     <div class="product-actions">
-                        <button onclick="window.storeApp.addToCart(${product.id})" class="btn btn-primary">
+                        <button onclick="event.stopPropagation(); window.storeApp.addToCart(${product.id})" class="btn btn-primary">
                             🛒 أضف للسلة
                         </button>
-                        <a href="products/${product.slug}.html" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
+                        <button onclick="event.stopPropagation(); window.open('${productUrl}', '_blank')" class="btn btn-secondary">
                             👁️ التفاصيل
-                        </a>
+                        </button>
                     </div>
                 </div>
             </div>
-        `).join('');
+        `;
+        }).join('');
 
         this.renderPagination(productsToShow.length);
     }
