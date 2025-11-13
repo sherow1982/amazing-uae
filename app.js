@@ -94,7 +94,7 @@ class StoreApp {
                         <button onclick="window.storeApp.addToCart(${product.id})" class="btn btn-primary">
                             🛒 أضف للسلة
                         </button>
-                        <a href="products/${product.slug}.html" class="btn btn-secondary">
+                        <a href="products/${product.slug}.html" target="_blank" rel="noopener noreferrer" class="btn btn-secondary">
                             👁️ التفاصيل
                         </a>
                     </div>
