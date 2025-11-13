@@ -116,7 +116,7 @@ class StoreApp {
         }
 
         let paginationHTML = '<div class="pagination-controls">';
-        
+
         if (this.currentPage > 1) {
             paginationHTML += `<button onclick="window.storeApp.goToPage(${this.currentPage - 1})" class="btn btn-outline">← السابق</button>`;
         }
@@ -142,7 +142,7 @@ class StoreApp {
         if (!product) return;
 
         const existingItem = this.cart.find(item => item.id == productId);
-        
+
         if (existingItem) {
             existingItem.quantity++;
         } else {
@@ -174,7 +174,7 @@ class StoreApp {
         if (!badge) return;
 
         const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
-        
+
         if (totalItems > 0) {
             badge.textContent = totalItems;
             badge.style.display = 'flex';
@@ -186,11 +186,11 @@ class StoreApp {
     toggleCartDrawer() {
         const drawer = document.getElementById('cartDrawer');
         const overlay = document.getElementById('cartOverlay');
-        
+
         if (!drawer || !overlay) return;
 
         const isOpen = drawer.style.right === '0px';
-        
+
         if (isOpen) {
             drawer.style.right = '-100%';
             overlay.style.display = 'none';
@@ -204,7 +204,7 @@ class StoreApp {
     renderCartDrawer() {
         const cartItems = document.getElementById('cartItems');
         const cartTotal = document.getElementById('cartTotal');
-        
+
         if (!cartItems || !cartTotal) return;
 
         if (this.cart.length === 0) {
