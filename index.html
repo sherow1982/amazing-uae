@@ -60,6 +60,10 @@
         let displayedCount = 0;
         const productsPerPage = 20;
 
+        const createSlug = (text) => {
+            return encodeURIComponent(text.replace(/\s+/g, '-').replace(/،/g, '').toLowerCase());
+        };
+
         const lazyLoadImage = (img) => {
             const src = img.dataset.src;
             if (src) {
@@ -88,15 +92,16 @@
             const endIndex = Math.min(displayedCount + productsPerPage, allProducts.length);
             for (let i = displayedCount; i < endIndex; i++) {
                 const product = allProducts[i];
+                const productUrl = `products/${createSlug(product.title)}-${product.id}.html`;
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
-                    <a href="products/${product.title.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]+/g, '-').replace(/^-+|-+$/g, '')}-${product.id}.html" class="product-link" title="عرض تفاصيل ${product.title}">
+                    <a href="${productUrl}" class="product-link" title="عرض تفاصيل ${product.title}">
                         <img class="lazy" data-src="${product.image_link}" alt="${product.title}" width="280" height="280">
                         <div class="product-title">${product.title}</div>
                         <div class="product-price">${product.price} درهم</div>
                     </a>
-                    <a href="products/${product.title.toLowerCase().replace(/[^a-z0-9\u0600-\u06FF]+/g, '-').replace(/^-+|-+$/g, '')}-${product.id}.html" class="view-more-btn">شاهد المزيد</a>
+                    <a href="${productUrl}" class="view-more-btn">شاهد المزيد</a>
                     <a href="${product.affiliate_link}" class="amazon-btn" target="_blank" rel="nofollow noopener">اشتري من أمازون</a>
                 `;
                 grid.appendChild(card);
