@@ -7,13 +7,11 @@
     <meta name="description" content="اكتشف أفضل المنتجات والعروض الحصرية من أمازون الإمارات بأسعار تنافسية. تسوق الآن واحصل على أفضل الصفقات">
     <meta name="keywords" content="أمازون الإمارات, تسوق أونلاين, منتجات أمازون, عروض أمازون, تسوق الإمارات">
     <link rel="canonical" href="https://sherow1982.github.io/amazing-uae/">
-    
     <!-- Open Graph -->
     <meta property="og:title" content="Amazing UAE - أفضل المنتجات من أمازون الإمارات">
     <meta property="og:description" content="اكتشف أفضل المنتجات والعروض من أمازون الإمارات">
     <meta property="og:type" content="website">
     <meta property="og:url" content="https://sherow1982.github.io/amazing-uae/">
-    
     <style>
         * {margin:0;padding:0;box-sizing:border-box;}
         body {font-family:'Segoe UI',Tahoma,Verdana,sans-serif;background:#f5f5f5;}
@@ -47,27 +45,21 @@
         <h1>🛍️ Amazing UAE</h1>
         <p>أفضل المنتجات من أمازون الإمارات</p>
     </header>
-
     <div class="container">
         <div id="products-grid">
             <div class="loading">جاري تحميل المنتجات...</div>
         </div>
-        
         <div class="load-more-container" id="load-more-container" style="display:none;">
             <button class="load-more-btn" id="load-more-btn">تحميل المزيد من المنتجات</button>
         </div>
     </div>
-
     <footer>
         <p>&copy; 2024 Amazing UAE - جميع الحقوق محفوظة</p>
     </footer>
-
     <script>
         let allProducts = [];
         let displayedCount = 0;
         const productsPerPage = 20;
-
-        // Lazy loading للصور
         const lazyLoadImage = (img) => {
             const src = img.dataset.src;
             if (src) {
@@ -76,7 +68,6 @@
                 img.removeAttribute('data-src');
             }
         };
-
         const observeImages = () => {
             const imageObserver = new IntersectionObserver((entries, observer) => {
                 entries.forEach(entry => {
@@ -86,16 +77,13 @@
                     }
                 });
             });
-
             document.querySelectorAll('img.lazy').forEach(img => {
                 imageObserver.observe(img);
             });
         };
-
         const loadMoreProducts = () => {
             const grid = document.getElementById('products-grid');
             const endIndex = Math.min(displayedCount + productsPerPage, allProducts.length);
-            
             for (let i = displayedCount; i < endIndex; i++) {
                 const product = allProducts[i];
                 const card = document.createElement('div');
@@ -111,31 +99,22 @@
                 `;
                 grid.appendChild(card);
             }
-            
             displayedCount = endIndex;
             observeImages();
-            
-            // إخفاء زر تحميل المزيد إذا تم عرض كل المنتجات
             if (displayedCount >= allProducts.length) {
                 document.getElementById('load-more-container').style.display = 'none';
             }
         };
-
         fetch('products-data.json')
             .then(response => response.json())
             .then(products => {
                 allProducts = products;
                 const grid = document.getElementById('products-grid');
                 grid.innerHTML = '';
-                
                 loadMoreProducts();
-                
-                // إظهار زر تحميل المزيد إذا كان هناك منتجات أخرى
                 if (allProducts.length > productsPerPage) {
                     document.getElementById('load-more-container').style.display = 'block';
                 }
-                
-                // إضافة حدث للزر
                 document.getElementById('load-more-btn').addEventListener('click', loadMoreProducts);
             })
             .catch(error => {
