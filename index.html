@@ -88,8 +88,7 @@
             const endIndex = Math.min(displayedCount + productsPerPage, allProducts.length);
             for (let i = displayedCount; i < endIndex; i++) {
                 const product = allProducts[i];
-                const slug = product.title || product.slug || product.id;
-                const productUrl = `products/${slug}.html`;
+                const productUrl = `products/${product.slug}.html`;
                 const card = document.createElement('div');
                 card.className = 'product-card';
                 card.innerHTML = `
