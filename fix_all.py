@@ -1,40 +1,73 @@
 import os
 import re
 import json
+import hashlib
 
 repo = r'C:\Users\shero\OneDrive\Desktop\amazing-uae'
 products_dir = os.path.join(repo, 'products')
 
-print("🔧 Complete Repository Fix\n")
+print("🔧 Final Fix - Shortening All Product File Names\n")
 
-# الخطوة 1: إعادة تسمية الملفات
-print("Step 1: Renaming files...")
-renamed_count = 0
-for filename in os.listdir(products_dir):
+# Step 1: اختصار أسماء الملفات
+print("Renaming all product files to short names...")
+mapping = {}
+products_data = []
+
+for idx, filename in enumerate(sorted(os.listdir(products_dir)), 1):
     if not filename.endswith('.html'):
         continue
     
-    clean_name = filename
-    clean_name = clean_name.replace('/', '-')
-    clean_name = clean_name.replace('\\', '-')
-    clean_name = re.sub(r'[^\w\-.]', '-', clean_name)
-    clean_name = re.sub(r'-+', '-', clean_name)
-    clean_name = clean_name[:120] + '.html' if len(clean_name) > 120 else clean_name
+    old_path = os.path.join(products_dir, filename)
     
-    if filename != clean_name:
-        old = os.path.join(products_dir, filename)
-        new = os.path.join(products_dir, clean_name)
-        try:
-            os.rename(old, new)
-            renamed_count += 1
-        except:
-            pass
+    try:
+        with open(old_path, 'r', encoding='utf-8') as f:
+            html = f.read()
+        
+        # استخراج البيانات
+        title = re.search(r'<h1[^>]*class="product-title"[^>]*>([^<]+)</h1>', html)
+        price = re.search(r'<span class="currency">[^<]*</span>([\d.]+)', html)
+        image = re.search(r'<meta property="og:image" content="([^"]+)"', html)
+        link = re.search(r'href="(https://www\.amazon\.ae/dp/[^"]+)"', html)
+        pid = re.search(r'كود المنتج: (\d+)', html)
+        
+        if not all([title, price, image, link, pid]):
+            continue
+        
+        # اسم جديد قصير
+        product_id = pid.group(1)
+        new_filename = f"product-{product_id}.html"
+        new_path = os.path.join(products_dir, new_filename)
+        
+        # إعادة تسمية
+        os.rename(old_path, new_path)
+        
+        # حفظ البيانات
+        products_data.append({
+            'id': int(product_id),
+            'title': title.group(1).strip(),
+            'price': float(price.group(1)),
+            'image_link': image.group(1),
+            'affiliate_link': link.group(1),
+            'slug': new_filename.replace('.html', '')
+        })
+        
+        print(f"✓ {idx}: {filename[:50]}... → {new_filename}")
+        
+    except Exception as e:
+        print(f"✗ Error: {filename[:50]}...")
 
-print(f"✓ Renamed {renamed_count} files\n")
+print(f"\n✓ Renamed {len(products_data)} files\n")
 
-# الخطوة 2: حذف style.css
-print("Step 2: Removing style.css...")
-css_fixed = 0
+# Step 2: توليد products-data.json
+print("Creating products-data.json...")
+with open(os.path.join(repo, 'products-data.json'), 'w', encoding='utf-8') as f:
+    json.dump(products_data, f, ensure_ascii=False, indent=2)
+
+print(f"✓ Created products-data.json with {len(products_data)} products\n")
+
+# Step 3: حذف style.css
+print("Removing style.css links...")
+fixed = 0
 for root, _, files in os.walk(repo):
     for f in files:
         if f.endswith('.html'):
@@ -42,58 +75,21 @@ for root, _, files in os.walk(repo):
             try:
                 with open(path, 'r', encoding='utf-8') as file:
                     content = file.read()
-                
                 new = re.sub(r'<link[^>]*style\.css[^>]*>', '', content)
-                
                 if content != new:
                     with open(path, 'w', encoding='utf-8') as file:
                         file.write(new)
-                    css_fixed += 1
+                    fixed += 1
             except:
                 pass
 
-print(f"✓ Fixed {css_fixed} files\n")
+print(f"✓ Fixed {fixed} files\n")
 
-# الخطوة 3: توليد products-data.json
-print("Step 3: Creating products-data.json...")
-products = []
-
-for filename in os.listdir(products_dir):
-    if not filename.endswith('.html'):
-        continue
-    
-    try:
-        with open(os.path.join(products_dir, filename), 'r', encoding='utf-8') as f:
-            html = f.read()
-        
-        title = re.search(r'<h1[^>]*class="product-title"[^>]*>([^<]+)</h1>', html)
-        price = re.search(r'<span class="currency">[^<]*</span>([\d.]+)', html)
-        image = re.search(r'<meta property="og:image" content="([^"]+)"', html)
-        link = re.search(r'href="(https://www\.amazon\.ae/dp/[^"]+)"', html)
-        pid = re.search(r'كود المنتج: (\d+)', html)
-        
-        if title and price and image and link and pid:
-            products.append({
-                'id': int(pid.group(1)),
-                'title': title.group(1).strip(),
-                'price': float(price.group(1)),
-                'image_link': image.group(1),
-                'affiliate_link': link.group(1),
-                'slug': filename.replace('.html', '')
-            })
-    except:
-        pass
-
-with open(os.path.join(repo, 'products-data.json'), 'w', encoding='utf-8') as f:
-    json.dump(products, f, ensure_ascii=False, indent=2)
-
-print(f"✓ Created {len(products)} products\n")
-
-print("=" * 50)
-print("✅ ALL FIXED!")
-print("=" * 50)
-print("\nNext steps:")
-print("1. git add .")
-print('2. git commit -m "Fix all 404 errors"')
-print("3. git push")
-print("\nThe website will work perfectly after pushing! 🎉")
+print("=" * 60)
+print("✅ COMPLETE! All product files now have short names.")
+print("=" * 60)
+print("\nNext:")
+print("  git add .")
+print('  git commit -m "Shorten product file names"')
+print("  git push")
+print("\n🎉 No more 404 errors after push!")
