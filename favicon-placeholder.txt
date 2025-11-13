@@ -1,0 +1,3 @@
+
+<!-- هذا ملف placeholder للـ favicon -->
+<!-- يرجى استبداله بملف favicon.ico حقيقي -->

@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-LZJNQMJ4SV"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'G-LZJNQMJ4SV');
+    </script>
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-NBR4VWBV');</script>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="سلة التسوق - متجر أمازينج الإمارات">
+    <meta name="keywords" content="سلة التسوق, متجر إلكتروني, أمازينج الإمارات">
+    <title>سلة التسوق | متجر أمازينج الإمارات</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🛒</text></svg>">
+    <style>
+        .cart-page {
+            max-width: 1200px;
+            margin: 2rem auto;
+            padding: 0 1rem;
+        }
+        .cart-header {
+            background: linear-gradient(135deg, #232F3E 0%, #FF9900 100%);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+        .cart-header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: 700;
+        }
+        .cart-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 2rem;
+            align-items: start;
+        }
+        .cart-items-section {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .cart-item {
+            display: grid;
+            grid-template-columns: 120px 1fr auto;
+            gap: 1.5rem;
+            padding: 1.5rem;
+            border: 2px solid #eee;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            background: #fafafa;
+            transition: all 0.3s;
+        }
+        .cart-item:hover {
+            border-color: #FF9900;
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.15);
+            transform: translateY(-2px);
+        }
+        .cart-item-image {
+            width: 120px;
+            height: 120px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: white;
+        }
+        .cart-item-details {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+        .cart-item-title {
+            font-size: 1.125rem;
+            font-weight: 600;
+            color: #232F3E;
+            line-height: 1.4;
+        }
+        .cart-item-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #FF9900;
+        }
+        .cart-item-controls {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .quantity-btn {
+            background: #232F3E;
+            color: white;
+            border: none;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 700;
+            font-size: 1.125rem;
+            transition: all 0.3s;
+        }
+        .quantity-btn:hover {
+            background: #FF9900;
+            transform: scale(1.1);
+        }
+        .quantity-display {
+            min-width: 50px;
+            text-align: center;
+            font-weight: 600;
+            font-size: 1.125rem;
+            padding: 0.5rem;
+            background: white;
+            border-radius: 8px;
+        }
+        .cart-item-actions {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            align-items: flex-end;
+        }
+        .remove-btn {
+            background: #dc3545;
+            color: white;
+            border: none;
+            padding: 0.75rem 1.25rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .remove-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(220, 53, 69, 0.3);
+        }
+        .cart-summary {
+            background: white;
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+            position: sticky;
+            top: 100px;
+        }
+        .summary-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #232F3E;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1rem;
+            border-bottom: 2px solid #eee;
+        }
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+            font-size: 1.125rem;
+        }
+        .summary-row.total {
+            font-size: 1.75rem;
+            font-weight: 700;
+            color: #FF9900;
+            padding-top: 1rem;
+            border-top: 2px solid #eee;
+            margin-top: 1rem;
+        }
+        .checkout-btn {
+            width: 100%;
+            padding: 1.25rem;
+            background: linear-gradient(135deg, #FF9900, #E68900);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1.5rem;
+            transition: all 0.3s;
+            box-shadow: 0 4px 12px rgba(255, 153, 0, 0.3);
+        }
+        .checkout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(255, 153, 0, 0.4);
+        }
+        .continue-shopping-btn {
+            width: 100%;
+            padding: 1rem;
+            background: white;
+            color: #232F3E;
+            border: 2px solid #232F3E;
+            border-radius: 12px;
+            font-size: 1.125rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: block;
+            text-align: center;
+        }
+        .continue-shopping-btn:hover {
+            background: #232F3E;
+            color: white;
+            transform: translateY(-2px);
+        }
+        .clear-cart-btn {
+            width: 100%;
+            padding: 1rem;
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: all 0.3s;
+        }
+        .clear-cart-btn:hover {
+            background: #c82333;
+            transform: translateY(-2px);
+        }
+        .empty-cart {
+            text-align: center;
+            padding: 4rem 2rem;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .empty-cart-icon {
+            font-size: 6rem;
+            margin-bottom: 1rem;
+        }
+        .empty-cart h2 {
+            font-size: 2rem;
+            color: #232F3E;
+            margin-bottom: 1rem;
+        }
+        .empty-cart p {
+            font-size: 1.125rem;
+            color: #666;
+            margin-bottom: 2rem;
+        }
+        @media (max-width: 1024px) {
+            .cart-content {
+                grid-template-columns: 1fr;
+            }
+            .cart-summary {
+                position: static;
+            }
+        }
+        @media (max-width: 768px) {
+            .cart-header h1 {
+                font-size: 2rem;
+            }
+            .cart-item {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+            }
+            .cart-item-image {
+                width: 100%;
+                height: 200px;
+            }
+            .cart-item-actions {
+                flex-direction: row;
+                justify-content: space-between;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-NBR4VWBV" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container" style="display: flex; justify-content: space-between; align-items: center;">
+            <div class="navbar-brand">
+                <a href="index.html" style="color: white; text-decoration: none;">
+                    <h1>🛍️ متجر أمازينج الإمارات</h1>
+                    <p class="subtitle">أفضل المنتجات المختارة بعناية ✨</p>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <main class="cart-page">
+        <div class="cart-header">
+            <h1>🛒 سلة التسوق</h1>
+            <p style="font-size: 1.125rem; opacity: 0.95;">راجع منتجاتك وأكمل عملية الشراء</p>
+        </div>
+
+        <div id="cartPageContent"></div>
+    </main>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>🏪 عن المتجر</h3>
+                    <p>نحن موقع تابع متخصص في عرض أفضل منتجات أمازون.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>📧 اتصل بنا</h3>
+                    <p><a href="mailto:sherow1982@gmail.com" target="_blank" style="color: inherit;">📧 البريد الإلكتروني: sherow1982@gmail.com</a></p>
+                    <p><a href="https://wa.me/201110760081" target="_blank" style="color: inherit;">📞 واتساب: +201110760081</a></p>
+                </div>
+            </div>
+            <div class="footer-bottom"><p>&copy; 2025 متجر أمازينج الإمارات</p></div>
+        </div>
+    </footer>
+
+    <script>
+        class CartPage {
+            constructor() {
+                this.cart = this.loadCart();
+                this.init();
+            }
+
+            loadCart() {
+                try {
+                    return JSON.parse(localStorage.getItem('amazing_uae_cart') || '[]');
+                } catch {
+                    return [];
+                }
+            }
+
+            saveCart() {
+                localStorage.setItem('amazing_uae_cart', JSON.stringify(this.cart));
+            }
+
+            init() {
+                this.renderCart();
+            }
+
+            renderCart() {
+                const container = document.getElementById('cartPageContent');
+                
+                if (this.cart.length === 0) {
+                    container.innerHTML = `
+                        <div class="empty-cart">
+                            <div class="empty-cart-icon">🛒</div>
+                            <h2>سلة التسوق فارغة</h2>
+                            <p>لم تقم بإضافة أي منتجات بعد</p>
+                            <a href="index.html" class="btn btn-primary" style="padding: 1rem 2rem; font-size: 1.125rem; display: inline-block;">
+                                🛍️ تصفح المنتجات
+                            </a>
+                        </div>
+                    `;
+                    return;
+                }
+
+                const totalItems = this.cart.reduce((sum, item) => sum + item.quantity, 0);
+                const totalPrice = this.cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+
+                container.innerHTML = `
+                    <div class="cart-content">
+                        <div class="cart-items-section">
+                            <h2 style="font-size: 1.75rem; margin-bottom: 1.5rem; color: #232F3E;">
+                                📦 المنتجات في السلة (${totalItems} منتج)
+                            </h2>
+                            <div id="cartItemsList"></div>
+                        </div>
+                        
+                        <div class="cart-summary">
+                            <h3 class="summary-title">📋 ملخص الطلب</h3>
+                            <div class="summary-row">
+                                <span>عدد المنتجات:</span>
+                                <span>${totalItems}</span>
+                            </div>
+                            <div class="summary-row total">
+                                <span>المجموع الكلي:</span>
+                                <span>${totalPrice.toFixed(2)} درهم</span>
+                            </div>
+                            <button onclick="cartPage.checkoutAmazon()" class="checkout-btn">
+                                🏷️ إتمام الشراء من أمازون
+                            </button>
+                            <a href="index.html" class="continue-shopping-btn">
+                                ⬅️ متابعة التسوق
+                            </a>
+                            <button onclick="cartPage.clearCart()" class="clear-cart-btn">
+                                🗑️ إفراغ السلة
+                            </button>
+                        </div>
+                    </div>
+                `;
+
+                this.renderItems();
+            }
+
+            renderItems() {
+                const itemsList = document.getElementById('cartItemsList');
+                if (!itemsList) return;
+
+                itemsList.innerHTML = this.cart.map(item => `
+                    <div class="cart-item">
+                        <img src="${item.image}" alt="${item.title}" class="cart-item-image">
+                        <div class="cart-item-details">
+                            <h3 class="cart-item-title">${item.title}</h3>
+                            <div class="cart-item-price">${item.price} درهم × ${item.quantity}</div>
+                            <div class="cart-item-controls">
+                                <button class="quantity-btn" onclick="cartPage.updateQuantity(${item.id}, ${item.quantity - 1})">−</button>
+                                <span class="quantity-display">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="cartPage.updateQuantity(${item.id}, ${item.quantity + 1})">+</button>
+                            </div>
+                        </div>
+                        <div class="cart-item-actions">
+                            <div style="font-size: 1.25rem; font-weight: 700; color: #FF9900;">
+                                ${(item.price * item.quantity).toFixed(2)} درهم
+                            </div>
+                            <button class="remove-btn" onclick="cartPage.removeItem(${item.id})">
+                                🗑️ حذف
+                            </button>
+                            <a href="${item.link}" target="_blank" class="btn btn-secondary" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                                👁️ عرض في أمازون
+                            </a>
+                        </div>
+                    </div>
+                `).join('');
+            }
+
+            updateQuantity(productId, newQuantity) {
+                if (newQuantity <= 0) {
+                    this.removeItem(productId);
+                    return;
+                }
+
+                const item = this.cart.find(item => item.id == productId);
+                if (item) {
+                    item.quantity = newQuantity;
+                    this.saveCart();
+                    this.renderCart();
+                }
+            }
+
+            removeItem(productId) {
+                if (confirm('هل تريد حذف هذا المنتج من السلة؟')) {
+                    this.cart = this.cart.filter(item => item.id != productId);
+                    this.saveCart();
+                    this.renderCart();
+                }
+            }
+
+            clearCart() {
+                if (confirm('هل أنت متأكد من إفراغ السلة بالكامل؟')) {
+                    this.cart = [];
+                    this.saveCart();
+                    this.renderCart();
+                }
+            }
+
+            checkoutAmazon() {
+                if (this.cart.length === 0) {
+                    alert('السلة فارغة!');
+                    return;
+                }
+
+                window.open(this.cart[0].link, '_blank');
+                
+                if (this.cart.length > 1) {
+                    setTimeout(() => {
+                        if (confirm(`لديك ${this.cart.length} منتجات في السلة. هل تريد فتح المنتج التالي؟`)) {
+                            this.openAllProducts(1);
+                        }
+                    }, 1000);
+                }
+            }
+
+            openAllProducts(index) {
+                if (index < this.cart.length) {
+                    window.open(this.cart[index].link, '_blank');
+                    if (index + 1 < this.cart.length) {
+                        setTimeout(() => {
+                            if (confirm(`منتج ${index + 1} من ${this.cart.length}. متابعة؟`)) {
+                                this.openAllProducts(index + 1);
+                            }
+                        }, 1000);
+                    }
+                }
+            }
+        }
+
+        const cartPage = new CartPage();
+    </script>
+
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org/",
+        "@type": "ShoppingCart",
+        "name": "سلة التسوق - متجر أمازينج الإمارات"
+    }
+    </script>
+</body>
+</html>

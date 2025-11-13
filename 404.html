@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - الصفحة غير موجودة | متجر أمازينج الإمارات</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .error-container { min-height: 80vh; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; padding: 2rem; }
+        .error-code { font-size: clamp(6rem, 15vw, 12rem); font-weight: 900; background: linear-gradient(135deg, #FF9900, #232F3E); -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text; margin: 0; line-height: 1; }
+        .error-message { font-size: clamp(1.5rem, 4vw, 2rem); color: #232F3E; margin: 1rem 0; font-weight: 600; }
+        .error-description { color: #666; font-size: 1.125rem; margin-bottom: 2rem; max-width: 500px; }
+        .error-actions { display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; }
+        @keyframes float { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-20px); } }
+        .emoji { font-size: 5rem; animation: float 3s ease-in-out infinite; margin-bottom: 2rem; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <div class="container">
+            <div class="navbar-brand">
+                <a href="index.html" style="color: inherit; text-decoration: none;">
+                    <h1>🛍️ متجر أمازينج الإمارات</h1>
+                </a>
+            </div>
+        </div>
+    </nav>
+    <main class="error-container">
+        <div class="emoji">🔍</div>
+        <h1 class="error-code">404</h1>
+        <h2 class="error-message">عذراً، الصفحة غير موجودة!</h2>
+        <p class="error-description">الصفحة التي تبحث عنها قد تكون تم نقلها أو حذفها أو لم تعد متوفرة.</p>
+        <div class="error-actions">
+            <a href="index.html" class="btn btn-primary" style="padding:1rem 2rem;font-size:1.125rem;">🏠 العودة للرئيسية</a>
+            <a href="index.html#search" class="btn btn-secondary" style="padding:1rem 2rem;font-size:1.125rem;">🔍 البحث عن منتجات</a>
+        </div>
+        <div style="margin-top:3rem;padding:2rem;background:#f8f9fa;border-radius:12px;max-width:600px;">
+            <h3 style="color:#232F3E;margin-bottom:1rem;">💡 هل تبحث عن شيء معين؟</h3>
+            <p style="color:#666;margin-bottom:1rem;">جرّب البحث في متجرنا:</p>
+            <div style="display:flex;gap:0.5rem;">
+                <input type="text" id="quick-search" placeholder="ابحث هنا..." style="flex:1;padding:0.75rem;border:2px solid #ddd;border-radius:8px;font-size:1rem;">
+                <button onclick="window.location.href='index.html?search=' + document.getElementById('quick-search').value" class="btn btn-primary">بحث</button>
+            </div>
+        </div>
+    </main>
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-bottom">
+                <p>&copy; 2025 متجر أمازينج الإمارات</p>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
